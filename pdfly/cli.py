@@ -19,6 +19,7 @@ import pdfly.metadata
 import pdfly.pagemeta
 import pdfly.rm
 import pdfly.rotate
+import pdfly.split
 import pdfly.uncompress
 import pdfly.up2
 import pdfly.update_offsets
@@ -368,3 +369,18 @@ def rotate(
     output: Path = typer.Option(..., "-o", "--output"),  # noqa
 ) -> None:
     pdfly.rotate.main(filename, output, degrees, pgrgs)
+
+
+@entry_point.command(name="split", help=pdfly.split.__doc__)  # type: ignore[misc]
+def split(
+    filename: Annotated[
+        Path,
+        typer.Argument(
+            dir_okay=False,
+            exists=True,
+            resolve_path=True,
+        ),
+    ],
+    output_dir: Path = typer.Option(..., "-o", "--output", dir_okay=True, file_okay=False),  # noqa
+) -> None:
+    pdfly.split.main(filename, output_dir)
