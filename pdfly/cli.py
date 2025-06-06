@@ -40,13 +40,17 @@ entry_point = typer.Typer(
         "pdfly is a pure-python cli application for manipulating PDF files."
     ),
     rich_markup_mode="rich",  # Allows to pretty-print commands documentation
+    no_args_is_help=True,
+    context_settings={"help_option_names": ["-h", "--help"]},
 )
 
 
 @entry_point.callback()  # type: ignore[misc]
 def common(
     ctx: typer.Context,
-    version: bool = typer.Option(None, "--version", callback=version_callback),
+    version: bool = typer.Option(
+        None, "-v", "--version", callback=version_callback, help="Show command version and exit."
+    ),
 ) -> None:
     pass
 
